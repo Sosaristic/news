@@ -19,7 +19,7 @@ let inputValue;
 
 async function getNews(whatToDo, typeOfButton) {
     if (whatToDo == "search") {
-        let url = `https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
+        let url = `https://thingproxy.freeboard.io/fetch/https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
         await fetch(url, {
             "method": "GET",
             "headers": {
