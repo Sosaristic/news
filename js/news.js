@@ -21,7 +21,7 @@ async function getNews(whatToDo, typeOfButton) {
     if (whatToDo == "search") {
         let url = `https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
         await fetch(url, {
-            mode: 'no-cors',
+            "mode": 'no-cors',
             "method": "GET",
             "headers": {
 
