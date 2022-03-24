@@ -20,12 +20,12 @@ let inputValue;
 async function getNews(whatToDo, typeOfButton) {
     if (whatToDo == "search") {
         const proxyUrl = "https://cors-anywhere.herokuapp.com/"
-        let url = `${proxyUrl}https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
+        let url = `https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
         await fetch(url, {
             
             "method": "GET",
             "headers": {
-
+                "Access-Control-Allow-Origin": "https://newsapi.org/v2/everything",
                 "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
             }
         })
