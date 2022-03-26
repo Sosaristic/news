@@ -19,8 +19,8 @@ let inputValue;
 
 async function getNews(whatToDo, typeOfButton) {
     if (whatToDo == "search") {
-        const proxyUrl = "https://cors-anywhere.herokuapp.com/"
-        let url = `${proxyUrl}https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
+       
+        let url = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
         await fetch(url, {
             
             "method": "GET",
@@ -97,7 +97,7 @@ async function getNews(whatToDo, typeOfButton) {
 
     // when user is not sarching
     else {
-        let url = `https://newsapi.org/v2/top-headlines?country=ng&pageSize=${itemsReturned}&page=${pageNumber}`;
+        let url = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=ng&pageSize=${itemsReturned}&page=${pageNumber}`;
 
         await fetch(url, {
             "method": "GET",
