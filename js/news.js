@@ -20,12 +20,12 @@ let inputValue;
 async function getNews(whatToDo, typeOfButton) {
     if (whatToDo == "search") {
        
-        let url = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
+        let url = `https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
         await fetch(url, {
             
             "method": "GET",
             "headers": {
-               
+               "Access-Control-Allow-Origin": "*",
                 "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
             }
         })
@@ -97,12 +97,12 @@ async function getNews(whatToDo, typeOfButton) {
 
     // when user is not sarching
     else {
-        let url = `https://cors-anywhere.herokuapp.com/https://newsapi.org/v2/top-headlines?country=ng&pageSize=${itemsReturned}&page=${pageNumber}`;
+        let url = `https://newsapi.org/v2/top-headlines?country=ng&pageSize=${itemsReturned}&page=${pageNumber}`;
 
         await fetch(url, {
             "method": "GET",
             "headers": {
-
+"Access-Control-Allow-Origin": "*",
                 "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
             }
         })
