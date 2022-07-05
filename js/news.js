@@ -1,6 +1,8 @@
 const mainContainer = document.querySelector('.main-container');
-const searchField = document.querySelector('.search-field');
-const searchIcon = document.querySelector('.fa-magnifying-glass')
+const desktopSearchField = document.querySelector('.desktop-search-field');
+const mobileSearchBox = document.querySelector('.mobile-search-box')
+const mobileSearchIcon = document.querySelector('#mobile-search-icon')
+const mobileSearchField = document.querySelector('.mobile-search')
 const generatedContainer = document.querySelector('.generated-content');
 const nextButton = document.querySelector('.next-button');
 const previousButton = document.querySelector('.previous-button');
@@ -16,19 +18,20 @@ let previousButtonClicked;
 
 let inputValue;
 
-
+mobileSearchIcon.addEventListener("click", () => {
+    mobileSearchBox.classList.toggle("show-mobile-search");
+    mobileSearchField.focus()
+})
 async function getNews(whatToDo, typeOfButton) {
     if (whatToDo == "search") {
-       
         let url = `https://newsapi.org/v2/everything?q=${inputValue}&searchIn=title&pageSize=12&page=${pageNumber}`;
         await fetch(url, {
-            
-            "method": "GET",
-            "headers": {
-               "Access-Control-Allow-Origin": "*",
-                "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
-            }
-        })
+                "method": "GET",
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
+                }
+            })
             .then(response => {
                 return response.json()
             })
@@ -41,10 +44,9 @@ async function getNews(whatToDo, typeOfButton) {
                 articlesReturned = data.articles;
                 if (totalResults != undefined) {
                     searchResultContainer.innerText = `${totalResults} results found for ${inputValue}`;
+                } else if (totalResults == undefined) {
+                    searchResultContainer.innerText = `no search found`;
                 }
-               else if(totalResults == undefined){
-                   searchResultContainer.innerText = `no search found`;
-               }
 
                 dataContainer(articlesReturned);
                 //handling buttons 
@@ -64,18 +66,13 @@ async function getNews(whatToDo, typeOfButton) {
                 if (typeOfButton == "next") {
                     numberOfRsultsFetched += generatedContainer.childNodes.length;
                     currentResults = generatedContainer.childNodes.length;
-                }
-
-
-                else if (typeOfButton == "previous") {
+                } else if (typeOfButton == "previous") {
                     if (numberOfRsultsFetched == totalResults) {
                         numberOfRsultsFetched -= currentResults;
-                    }
-                    else {
+                    } else {
                         numberOfRsultsFetched -= generatedContainer.childNodes.length;
                     }
-                }
-                else {
+                } else {
                     numberOfRsultsFetched = generatedContainer.childNodes.length;
                     currentResults = generatedContainer.childNodes.length;
                 }
@@ -100,12 +97,12 @@ async function getNews(whatToDo, typeOfButton) {
         let url = `https://newsapi.org/v2/top-headlines?country=ng&pageSize=${itemsReturned}&page=${pageNumber}`;
 
         await fetch(url, {
-            "method": "GET",
-            "headers": {
-"Access-Control-Allow-Origin": "*",
-                "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
-            }
-        })
+                "method": "GET",
+                "headers": {
+                    "Access-Control-Allow-Origin": "*",
+                    "x-Api-key": "1cadf7b5efbf443ea71bf42963420972"
+                }
+            })
             .then(response => {
                 return response.json()
             })
@@ -136,18 +133,13 @@ async function getNews(whatToDo, typeOfButton) {
                 if (typeOfButton == "next") {
                     numberOfRsultsFetched += generatedContainer.childNodes.length;
                     currentResults = generatedContainer.childNodes.length;
-                }
-
-
-                else if (typeOfButton == "previous") {
+                } else if (typeOfButton == "previous") {
                     if (numberOfRsultsFetched == totalResults) {
                         numberOfRsultsFetched -= currentResults;
-                    }
-                    else {
+                    } else {
                         numberOfRsultsFetched -= generatedContainer.childNodes.length;
                     }
-                }
-                else {
+                } else {
                     numberOfRsultsFetched = generatedContainer.childNodes.length;
                     currentResults = generatedContainer.childNodes.length;
                 }
@@ -169,12 +161,7 @@ async function getNews(whatToDo, typeOfButton) {
 
 getNews("none");
 
-searchIcon.addEventListener('click', () => {
-    pageNumber = 1;
-    numberOfRsultsFetched = 0;
-    inputValue = searchField.value;
-    getNews("search");
-})
+
 
 function removeAllChilds(parent) {
     while (parent.firstChild) {
@@ -212,7 +199,8 @@ function dataContainer(dataObtained) {
             title,
             source,
             url,
-            urlToImage } = dataObtained[x];
+            urlToImage
+        } = dataObtained[x];
 
         //setting the text contents
         titleContainer.innerText = title;
@@ -240,13 +228,13 @@ function dataContainer(dataObtained) {
         }
 
         let timeFormat;
+
         function formatTime(hours) {
 
             if (hours <= 23 && hours > 12) {
                 timeFormat = "pm";
                 publishedHour -= 12;
-            }
-            else {
+            } else {
                 timeFormat = "am";
             }
         }
@@ -264,8 +252,7 @@ function dataContainer(dataObtained) {
             articleImage.setAttribute("width", "100%")
             articleImage.setAttribute("alt", "article image");
             imageContainer.append(articleImage)
-        }
-        else {
+        } else {
             let articleImage = document.createElement('IMG');
             articleImage.setAttribute("src", "images/News 24.png");
             articleImage.setAttribute("height", "100%");
@@ -278,7 +265,7 @@ function dataContainer(dataObtained) {
 
         articleLink.href = url;
         articleLink.target = "blank"
-        let linkText = document.createTextNode("see more");
+        let linkText = document.createTextNode("Read more");
 
         articleLink.appendChild(linkText);
 
@@ -317,6 +304,7 @@ function previousPage() {
 
 
 }
+
 function previousSearchPage() {
     pageNumber--;
     getNews("search", "previous");
